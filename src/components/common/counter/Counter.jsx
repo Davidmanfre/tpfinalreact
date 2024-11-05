@@ -1,7 +1,8 @@
+import { Button } from "@mui/material";
 import { useState } from "react";
 
 const Counter = () => {
-  const [contador, setContador] = useState(0);
+  const [contador, setContador] = useState(1);
   const sumar = () => {
     setContador(contador + 1);
   };
@@ -13,9 +14,10 @@ const Counter = () => {
 
   return (
     <div>
-      <h1>Contador: {contador} </h1>
       <button onClick={sumar}>Sumar</button>
+      <h1>{contador} </h1>
       <button onClick={restar}>Restar</button>
+      <Button variant="contained">Agregar al carrito</Button>
     </div>
   );
 };
