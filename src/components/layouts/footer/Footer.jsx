@@ -8,6 +8,7 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
+
 import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
 
 export default function Footer() {

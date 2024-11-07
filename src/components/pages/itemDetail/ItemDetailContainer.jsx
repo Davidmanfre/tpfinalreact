@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ItemDetail from "./ItemDetail";
 import { products } from "../../../ProductsMock";
 import { useParams } from "react-router-dom";
+import { CartContext } from "../../../context/CartContext";
 
 const ItemDetailContainer = () => {
   const [item, setItem] = useState({});
+
+  const { addToCart } = useContext(CartContext);
 
   const { id } = useParams(); // Get the id from the URL
 
@@ -15,7 +18,12 @@ const ItemDetailContainer = () => {
     }
   }, [id]);
 
-  return <ItemDetail item={item} />;
+  const onAdd = (quantity) => {
+    let productoParaElCarrito = { ...item, quantity };
+    addToCart(productoParaElCarrito); // Add the item to the cart using the CartContext's addToCart method
+  };
+
+  return <ItemDetail item={item} onAdd={onAdd} />;
 };
 
 export default ItemDetailContainer;
