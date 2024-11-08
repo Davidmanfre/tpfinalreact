@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 
-const ItemDetail = ({ item, onAdd }) => {
+const ItemDetail = ({ item, onAdd, totalItems }) => {
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
@@ -24,10 +24,13 @@ const ItemDetail = ({ item, onAdd }) => {
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
               ${item.price}
             </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              ya tienes {totalItems} unidades en el carrito
+            </Typography>
           </CardContent>
         </CardActionArea>
       </Card>
-      <Counter onAdd={onAdd} stock={item.stock} />
+      <Counter onAdd={onAdd} stock={item.stock} totalItems={totalItems} />
     </div>
   );
 };

@@ -6,7 +6,19 @@ export const CartContextProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
   const addToCart = (product) => {
-    setCart([...cart, product]);
+    let existe = cart.some((elemento) => elemento.id === product.id);
+
+    if (existe) {
+      let nuevoArray = cart.map((elemento) => {
+        if (elemento.id === product.id) {
+          return { ...elemento, quantity: product.quantity };
+        }
+        return elemento;
+      });
+      setCart(nuevoArray);
+    } else {
+      setCart([...cart, product]);
+    }
   };
   const clearCart = (product) => {
     setCart([]);
@@ -20,9 +32,23 @@ export const CartContextProvider = ({ children }) => {
     }, 0);
     return totalCarrito;
   };
-  //funcion que me diga el total de productos del carrito
-  const getTotalItems = () => {};
+  const getTotalItems = () => {
+    return cart.reduce((acc, item) => acc + item.quantity, 0);
+  };
 
-  let data = { cart, addToCart, clearCart, deleteProductById, getTotalAmount };
+  const getTotalQuantityById = (id) => {
+    let product = cart.find((element) => element.id === id);
+    return product ? product.quantity : 1;
+  };
+
+  let data = {
+    cart,
+    addToCart,
+    clearCart,
+    deleteProductById,
+    getTotalAmount,
+    getTotalItems,
+    getTotalQuantityById,
+  };
   return <CartContext.Provider value={data}>{children}</CartContext.Provider>;
 };
