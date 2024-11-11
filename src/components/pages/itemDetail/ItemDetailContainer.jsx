@@ -4,6 +4,8 @@ import { products } from "../../../ProductsMock";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../../../context/CartContext";
 import Swal from "sweetalert2";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../../../../config-firebase";
 
 const ItemDetailContainer = () => {
   const [item, setItem] = useState({});
@@ -15,10 +17,10 @@ const ItemDetailContainer = () => {
   let totalItems = getTotalQuantityById(id);
 
   useEffect(() => {
-    let product = products.find((product) => product.id === id);
-    if (product) {
-      setItem(product);
-    }
+    let productCollection = collection(db, "productos");
+    let refDoc = doc(productCollection, id);
+    let getProduct = getDoc(refDoc);
+    getProduct.then((res) => setItem({ ...res.data(), id: res.id }));
   }, [id]);
 
   const onAdd = (quantity) => {
@@ -37,3 +39,8 @@ const ItemDetailContainer = () => {
 };
 
 export default ItemDetailContainer;
+
+// let product = products.find((product) => product.id === id);
+// if (product) {
+//   setItem(product);
+// }
